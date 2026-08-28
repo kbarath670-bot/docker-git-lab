@@ -7,9 +7,9 @@ const PORT = 3000;
 app.get("/", (req, res) => {
 
     res.json({
-        application: "ABC Employee Portal",
-        version: "1.0",
-        environment: "Development",
+        application: "ABK Employee Portal",
+        version: "2.0",
+        environment: "Production",
         status: "Running"
     });
 
