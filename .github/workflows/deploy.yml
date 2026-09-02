@@ -1,0 +1,46 @@
+name: Deploy HTML Application
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "html-app/**"
+      - ".github/workflows/deploy.yml"
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+            cd ~/git-projects/docker-git-lab
+
+            git pull origin main
+
+            cd html-app
+
+            docker stop employee-html || true
+
+            docker rm employee-html || true
+
+            docker build -t employee-html:latest .
+
+            docker run -d \
+              --name employee-html \
+              -p 8080:80 \
+              employee-html:latest
+
+            docker ps
