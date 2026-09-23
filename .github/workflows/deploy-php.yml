@@ -1,5 +1,18 @@
-    steps:
+name: Deploy PHP Application
 
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "php-app/**"
+      - ".github/workflows/deploy-php.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -16,15 +29,19 @@
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
 
           script: |
             cd ~/git-projects/docker-git-lab
+
             git pull origin main
 
             cd php-app
 
             docker stop employee-php || true
+
             docker rm employee-php || true
+
             docker rmi employee-php:latest || true
 
             docker build -t employee-php:latest .
