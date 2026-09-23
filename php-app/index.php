@@ -5,7 +5,7 @@
 </head>
 <body>
 
-    <h1>ABK Technologies</h1>
+    <h1>ABK Technology</h1>
     <h2>PHP Application</h2>
     <h3>CI/CD Version 2 - Deployed Automatically</h3>
 
