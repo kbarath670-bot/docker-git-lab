@@ -7,7 +7,7 @@
 
     <h1>ABK Technology</h1>
     <h2>PHP Application</h2>
-    <p>Version 2.0</p>
+    <p>Version 1.1</p>
 
 </body>
 </html>
