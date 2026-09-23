@@ -1,0 +1,8 @@
+name: Barath
+role: DevOps Engineer
+operating_system: Ubuntu
+
+tools:
+  - Docker
+  - Git
+  - GitHub
