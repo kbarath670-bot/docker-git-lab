@@ -1,12 +1,12 @@
-name: Deploy PHP Application
+name: Deploy HTML Application
 
 on:
   push:
     branches:
       - main
     paths:
-      - "php-app/**"
-      - ".github/workflows/deploy-php.yml"
+      - "html-app/**"
+      - ".github/workflows/deploy-html.yml"
 
 jobs:
   deploy:
@@ -23,7 +23,7 @@ jobs:
             && echo "SUCCESS: EC2 port 22 is reachable" \
             || (echo "FAILED: EC2 port 22 is not reachable" && exit 1)
 
-      - name: Deploy PHP Application to EC2
+      - name: Deploy HTML Application to EC2
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -38,19 +38,19 @@ jobs:
 
             git pull origin main
 
-            cd php-app
+            cd html-app
 
-            docker stop employee-php || true
+            docker stop employee-html || true
 
-            docker rm employee-php || true
+            docker rm employee-html || true
 
-            docker rmi employee-php:latest || true
+            docker rmi employee-html:latest || true
 
-            docker build -t employee-php:latest .
+            docker build -t employee-html:latest .
 
             docker run -d \
-              --name employee-php \
-              -p 8081:80 \
-              employee-php:latest
+              --name employee-html \
+              -p 8080:80 \
+              employee-html:latest
 
             docker ps
